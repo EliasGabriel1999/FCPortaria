@@ -1,0 +1,82 @@
+{% extends './portaria_base.html' %}
+{% block title %} Entrada {% endblock %}
+{% block page %} <i class="fa-solid fa-right-to-bracket"></i> Entrada {% endblock %}
+{% block content %}
+{% load bootstrap4 %}
+<main>
+  <br>
+  <div class="container-fluid px-4">
+    <div class="container-fluid px-4">
+     <div style="text-align: left">
+          <a href="{% url 'portaria:portaria_home' %} " class="btn btn-light">
+            <i class="fa-solid fa-arrow-left"></i>
+            Voltar
+          </a>
+        </div>
+    <br>
+    <div class="shadow p-3 mb-5 bg-white rounded">
+      {% bootstrap_messages %}
+      <label>Qual visitante você procura?</label>
+      <form action="?" id="pesquisa-visitante" method="GET">
+        {% csrf_token %}
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Filtros</span>
+          </div>
+          <input type="text" placeholder="Nome ou CPF" name="filtro" value="{{ request.GET.filtro }}" id="inputNome"
+            class="form-control" autocomplete="off">
+        </div>
+        <br>
+        <div style="text-align: right">
+          <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Pesquisar
+          </button>
+        </div>
+        <br>
+      </form>
+      <div class="card mb-4">
+        <div class="card-header">
+          <i class="fa-solid fa-users"></i>
+          Visitantes
+        </div>
+        <div class="card-body">
+          <table id="datatablesSimple">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Opções</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Opções</th>
+              </tr>
+            </tfoot>
+            <tbody>
+              {% for visitante in visitantes %}
+              <tr>
+                <td>{{ visitante.nome }}</td>
+                <td>{{ visitante.cpf|slice:":3" }}********</td>
+                <td style="text-align: center;">
+                  {% if visitante.id_situacaocadastro_id == 1 %}
+                  <a href="{% url 'portaria:portaria_lancentrada' visitante.id%}" class="btn btn-success" data-placement="top" title="Realizar Entrada"><i class="fa-solid fa-right-to-bracket"></i></a>
+                  {% else %}
+                  <a href="#" class="btn btn-secondary" data-placement="top"><i class="fa-solid fa-right-to-bracket"></i></a>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+{% endblock %}

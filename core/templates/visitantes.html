@@ -1,0 +1,90 @@
+{% extends './base.html' %}
+{% block title %} Visitantes {% endblock %}
+{% block page %} <i class="fa-solid fa-users"></i> Visitantes {% endblock %}
+{% block content %}
+{% load bootstrap4 %}
+<main>
+  <div class="container-fluid px-4">
+    <br>
+    <div>
+    <a href="{% url 'core:criar_visitantes' %}" type="submit" class="btn btn-primary" data-placement="top" title="Cadastrar">
+            <i class="fa-solid fa-plus"></i>
+            Add Visitante
+          </a>
+    </div>
+    <br>
+    <div class="shadow p-3 mb-5 bg-white rounded">
+      {% bootstrap_messages %}
+      <label>Consultar Visitantes</label>
+      <form action="?" id="pesquisa-visitante" method="GET">
+        {% csrf_token %}
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Filtros</span>
+          </div>
+          <input type="text" placeholder="Nome ou CPF" name="filtro" value="{{ request.GET.filtro }}" id="inputNome"
+            class="form-control">
+        </div>
+        <br>
+        <div style="text-align: right;">
+          <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Pesquisar
+          </button>
+        </div>
+        <br>
+      </form>
+      <div class="card mb-4">
+        <div class="card-header">
+          <i class="fa-solid fa-users"></i>
+          Visitantes
+        </div>
+        <div class="card-body">
+          <table id="datatablesSimple">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Situação Cadastro</th>
+                <th>Opções</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Situação Cadastro</th>
+                <th>Opções</th>
+              </tr>
+            </tfoot>
+            <tbody>
+              {% for visitante in visitantes %}
+              <tr>
+                <td>{{ visitante.id }}</td>
+                <td>{{ visitante.nome }}</td>
+                <td>{{ visitante.cpf }}</td>
+                <td>{{ visitante.id_situacaocadastro }}</td>
+                <td style="text-align: center;">
+                  <a href="{% url 'core:editar_visitante' visitante.id %}" class="btn btn-primary" data-placement="top" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
+                  {% if visitante.id_situacaocadastro_id == 2 %}
+                  <a href="#" class="btn btn-danger" data-placement="top" title="Excluir"><i
+                      class="fa-solid fa-trash"></i></a>
+                  {% else %}
+                  <a href="{% url 'core:delete_visitante' visitante.id %}" class="btn btn-danger" data-placement="top" title="Excluir"><i
+                      class="fa-solid fa-trash"></i></a>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+{% endblock %}

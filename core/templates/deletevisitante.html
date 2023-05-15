@@ -1,0 +1,47 @@
+{% extends './base.html' %}
+{% block title %} Excluir Visitantes {% endblock %}
+{% block page %} <i class="fa-solid fa-user-xmark"></i> Excluir Visitantes {% endblock %}
+{% block content %}
+{% load bootstrap4 %}
+<main>
+  <div class="container-fluid px-4">
+    <br>
+    <div class="container">
+      <div class="row">
+        <div class="col-6">
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="shadow p-3 mb-5 bg-white rounded">
+      <p>Você tem certeza que quer alterar a situação de "{{visitante.id_situacaocadastro}}" para "EXCLUIDO"?
+      </p>
+      <div style="text-align: right">
+        <form action="{% url 'core:delete_visitante' visitante.id %}" method="POST">
+          {% csrf_token %}
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">ID</span>
+            </div>
+            <input name="id" type="text" value="{{ visitante.id }}" readonly class="form-control">
+          </div>
+          <br>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Nome</span>
+            </div>
+            <input name="nome" type="text" value="{{ visitante.nome }}" readonly class="form-control">
+          </div>
+          <br>
+          <div>
+            <a href="{% url 'core:visitantes' %}" type="button" class="btn btn-default" data-dismiss="modal">Não</a>
+            <button type="submit" class="btn btn-danger">Sim</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+{% endblock %}

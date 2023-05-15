@@ -1,0 +1,80 @@
+{% extends './base.html' %}
+{% block title %} Redes {% endblock %}
+{% block page %} <i class="fa-solid fa-shop"></i> Redes {% endblock %}
+{% block content %}
+{% load bootstrap4 %}
+<main>
+  <div class="container-fluid px-4">
+    <br>
+    <div>
+      <a href="{% url 'core:insere_visitante'%}" type="submit" class="btn btn-primary" data-placement="top" title="Cadastrar">
+            <i class="fa-solid fa-user-plus"></i> Vincular Visitante
+    </a>
+    </div>
+    <br>
+    <div class="shadow p-3 mb-5 bg-white rounded">
+      {% bootstrap_messages %}
+      <label>Consultar Redes</label>
+      <form action="?" id="pesquisa-visitante" method="GET">
+        {% csrf_token %}
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Filtros</span>
+          </div>
+          <input type="text" placeholder="ID" name="filroID" value="{{ request.GET.filroID }}" id="inputID"
+            class="form-control">
+          <input type="text" placeholder="CNPJ ou Razão Social" name="filtro" value="{{ request.GET.filtro }}" id="inputNome"
+            class="form-control">
+        </div>
+        <br>
+        <div style="text-align: right;">
+          <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Pesquisar
+          </button>
+        </div>
+        <br>
+      </form>
+      <div class="card mb-4">
+        <div class="card-header">
+          <i class="fa-solid fa-shop"></i> Redes
+        </div>
+        <div class="card-body">
+          <table id="datatablesSimple">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Razão Social</th>
+                <th>CNPJ</th>
+                <th>Opções</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>ID</th>
+                <th>Razão Social</th>
+                <th>CNPJ</th>
+                <th>Opções</th>
+              </tr>
+            </tfoot>
+            <tbody>
+              {% for rede in fornecedor %}
+              <tr>
+                <td>{{ rede.id }}</td>
+                <td>{{ rede.razaosocial }}</td>
+                <td>{{ rede.cnpj }}</td>
+                <td style="text-align: center;">
+                  <a href="{% url 'core:rede_vinculo' rede.id %}" class="btn btn-primary" data-placement="top" title="Editar Visitantes"><i class="fa-solid fa-user-pencil"></i></a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+{% endblock %}

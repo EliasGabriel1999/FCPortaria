@@ -1,0 +1,102 @@
+{% extends './base.html' %}
+{% block title %} Rel. Visitas {% endblock %}
+{% block page %} <i class="fa-solid fa-file"></i> Rel. Visitas {% endblock %}
+{% block content %}
+{% load bootstrap4 %}
+<main>
+  <br>
+  <div class="container-fluid px-4">
+    <br>
+    <div class="shadow p-3 mb-5 bg-white rounded">
+      {% bootstrap_messages %}
+      <label>Informe os dados abaixo para realizar a consulta</label>
+      <form action="?" id="pesquisa-visitante" method="GET">
+        {% csrf_token %}
+        <label>Loja</label>
+        <div class="input-group">
+          <select id="id_loja" class="form-control is-valid django-select2 select2-hidden-accessible" style="width:100%" name="loja">
+            {% for loja in lojas %}
+                <option value="{{ loja.id }}">{{ loja.descricao }}</option>
+            {% endfor %}
+	      </select>
+        </div>
+        <label>Visitante</label>
+        <div class="input-group">
+          <select id="id_id_visitante" style="width:100%" class="form-control is-valid django-select2 select2-hidden-accessible" name="filtro" value="{{ request.GET.filtro }}" data-minimum-input-length="1">
+            <option value="" selected="selected"> Selecionar Visitante</option>
+            {% for visitante in visitantes %}
+            <option value="{{ visitante.id }}">{{ visitante.id }} - {{ visitante.nome }} {{ visitante.cpf }}</option>
+            {% endfor %}
+	      </select>
+        </div>
+        <label>Fornecedor</label>
+        <div class="input-group">
+          <select id="id_id_fornecedor" style="width:100%" class="form-control is-valid django-select2 select2-hidden-accessible" name="fornecedor" value="{{ request.GET.fornecedor }}" data-minimum-input-length="1">
+            <option value="" selected="selected"> Selecionar Fornecedor</option>
+            {% for fornecedor in fornecedores %}
+            <option value="{{ fornecedor.id }}">{{ fornecedor.id }} - {{ fornecedor.razaosocial }} {{ fornecedor.cnpj }}</option>
+            {% endfor %}
+	      </select>
+        </div>
+        <label>Período</label>
+        <div class="input-group">
+        <input type="date" name="dtini" value="{{ request.GET.dtini }}" class="form-control datepicker" data-provide="datepicker" required>
+        <input type="date" name="dtfim" value="{{ request.GET.dtfim }}" class="form-control datepicker" data-provide="datepicker" required>
+        </div>
+        <br>
+        <div style="text-align: right">
+          <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Pesquisar
+          </button>
+        </div>
+        <br>
+      </form>
+      <div class="card mb-4">
+        <div class="card-header">
+          <i class="fa-solid fa-file"></i>
+          Visitas Realizadas
+        </div>
+        <div class="card-body">
+          <table id="datatablesSimple">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Entrada</th>
+                <th>Saída</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>Data</th>
+                <th>Entrada</th>
+                <th>Saída</th>
+              </tr>
+            </tfoot>
+            <tbody>
+              {% for visita in visitas %}
+              <tr>
+                <td>{{ visita.datalanc|date:"d/m/Y" }}</td>
+                <td>{{ visita.entrada }}</td>
+                <td>{{ visita.saida }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+        <div class="card-body">
+          <div style="text-align: right">
+          <a href="{%url 'core:relatorio_pdf'%}?id_loja={{ request.GET.loja|urlencode }}&filtro={{ request.GET.filtro|urlencode }}&fornecedor={{ request.GET.fornecedor|urlencode }}&dtini={{ request.GET.dtini|urlencode }}&dtfim={{ request.GET.dtfim|urlencode }}" type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-file"></i>
+            Gerar PDF
+          </a>
+        </div>
+        </div>
+    </div>
+  </div>
+
+</main>
+
+{% endblock %}

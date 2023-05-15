@@ -1,0 +1,30 @@
+{% extends './portaria_base.html' %}
+{% block title %} Saída {% endblock %}
+{% block page %} <i class="fa-solid fa-right-from-bracket"></i> Saída {% endblock %}
+{% block content %}
+{% load bootstrap4 %}
+<main>
+  <div class="container-fluid px-4">
+    <br>
+    <div class="container">
+      <div class="row">
+        <div class="col-6">
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="shadow p-3 mb-5 bg-white rounded">
+        <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <div style="text-align: right">
+            <a href="{% url 'portaria:portaria_home' %}" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+</form>
+    </div>
+  </div>
+
+</main>
+
+{% endblock %}

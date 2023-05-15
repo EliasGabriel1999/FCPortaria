@@ -1,0 +1,53 @@
+{% extends './portaria_base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% block title %} Início {% endblock %}
+{% block page %} <i class="fa-solid fa-house"></i> Início {% endblock %}
+{% block content %}
+<div class="container-fluid px-4" style="text-align: center; margin-top:100px">
+    <h4>
+        Bem-Vindo!
+    </h4>
+    <label>
+        Escolha uma opção para continuar.
+    </label>
+    <div class="row justify-content-center">
+    <div class="col-xl-3 col-md-6">
+        {% bootstrap_messages %}
+        </div>
+    </div>
+    <div>
+        <div class="row justify-content-center">
+            <div class="col-xl-3 col-md-6">
+                <div class="card text-black mb-4">
+                    <br>
+                    <div><i class="fa-solid fa-right-to-bracket" style="color: grey; width:50px; height:50px;"></i></div>
+                    <div class="card-body">Entrada</div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-black stretched-link" href="{% url 'portaria:portaria_entrada' %}">Realizar Entrada Visitante</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card text-black mb-4">
+                    <br>
+                    <div><div><i class="fa-solid fa-right-from-bracket" style="color: grey; width:50px; height:50px;"></i></div></div>
+                    <div class="card-body">Saída</div>
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                        <a class="small text-black stretched-link" href="{% url 'portaria:portaria_saida' %}">
+                            {% if qtvisitantes %}
+                            ({{qtvisitantes}}) Visitantes dentro da loja
+                            {% else %}
+                            (0) Visitantes dentro da loja
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

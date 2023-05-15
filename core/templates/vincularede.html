@@ -1,0 +1,64 @@
+{% extends './base.html' %}
+{% block title %} Rede x Visitante {% endblock %}
+{% block page %}  <i class="fa-solid fa-link"></i> Rede x Visitante {% endblock %}
+{% block content %}
+{% load bootstrap4 %}
+<main>
+  <div class="container-fluid px-4">
+    <br>
+    <br>
+    <div class="shadow p-3 mb-5 bg-white rounded">
+      {% bootstrap_messages %}
+      <label>Rede</label>
+      <form>
+        <div class="input-group">
+          {% for rede in fornecedor %}
+          <input type="text" placeholder="Razão Social" name="filtro" value="{{ rede.id }} - {{ rede.razaosocial }} {{ rede.cnpj }}" id="inputNome"
+            class="form-control" readonly>
+          {% endfor %}
+        </div>
+        <br>
+      </form>
+      <div class="card mb-4">
+        <div class="card-header">
+          <i class="fa-solid fa-users"></i> Visitantes
+        </div>
+        <div class="card-body">
+          <table id="datatablesSimple">
+            <thead>
+              <tr>
+                <th>Visitante</th>
+                <th>Opções</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>Visitante</th>
+                <th>Opções</th>
+              </tr>
+            </tfoot>
+            <tbody>
+              {% for visitante in visitantes %}
+              <tr>
+                <td>{{ visitante.id_visitante }}</td>
+                <td style="text-align: center;">
+                  <a href="{% url 'core:desvincula_rede' visitante.id %}" class="btn btn-danger" data-placement="top" title="Remover Visitante">
+                    <i class="fa-solid fa-user-xmark"></i></a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+      <div style="text-align: right">
+        <a href="{% url 'core:rede' %}" class="btn btn-light" data-placement="top" title="Remover Visitante">
+                    Sair</a>
+          </div>
+    </div>
+  </div>
+
+</main>
+
+{% endblock %}

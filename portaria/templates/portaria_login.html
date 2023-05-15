@@ -1,0 +1,47 @@
+{% load bootstrap4 %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>FUTURECODE | Login FCPortaria</title>
+    {% bootstrap_css %}
+</head>
+
+<body id="login">
+    <main class="container">
+        <div style="text-align: center;">
+            <img id="logo" src="{% static 'images/logo.png' %}">
+            <h4>Login</h4>
+            <Label>Entre para continuar</Label>
+        </div>
+        {% bootstrap_messages %}
+        <form action="{% url 'portaria:portaria_login' %}" method="POST" class="form" autocomplete="on">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+            <button type="submit" class="btn btn-primary" style="width: 100%">Entrar</button>
+            {% endbuttons %}
+        </form>
+        <div class="footer" style="text-align: center">
+            <span></span>
+        </div>
+    </main>
+    {% bootstrap_javascript jquery='full' %}
+</body>
+
+<!-- FOOTER -->
+<footer class="bg-light text-center text-lg-start" style="width: 100%;  position: fixed; bottom: 0px; left: 0px; ">
+    <!-- Copyright -->
+    <div class="text-center p-3">
+        © 2023 FUTURECODE | Todos os direitos reservados
+    </div>
+    <!-- Copyright -->
+</footer>
+<!-- FOOTER -->
+
+</html>

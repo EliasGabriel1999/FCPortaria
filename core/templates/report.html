@@ -1,0 +1,49 @@
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="{% static 'css/invoice.css' %}" rel="stylesheet">
+    <title>Invoice</title>
+  </head>
+
+  <body>
+    <h2>Relatório Visitas</h2>
+    <aside>
+      <address id="from">
+        Loja: {{loja}}
+        Nome: {{visitante.id}} - {{visitante.nome}}
+        Fornecedor: {{fornecedor}}
+        Período: {{dtini}} à {{dtfim}}
+      </address>
+    </aside>
+
+    <dl id="informations">
+      <dt>Data Emissão</dt>
+      <dd>{{dtemissao|date:"Y-m-d"}}</dd>
+    </dl>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Entrada</th>
+          <th>Saída</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for visita in visitas%}
+        <tr>
+          <td>{{visita.datalanc|date:"Y-m-d"}}</td>
+          <td>{{visita.entrada}}</td>
+          <td>{{visita.saida}}</td>
+      {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+  </body>
+  <script>
+  window.onload = function() {
+    window.print();
+  }
+  </script>
+</html>
